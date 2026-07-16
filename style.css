@@ -207,3 +207,52 @@ body {
     outline: none;
     border-color: var(--primary);
 }
+
+/* =========================================
+   PERBAIKAN TAMPILAN DESKTOP (PC/LAPTOP)
+   ========================================= */
+
+/* 1. Memperbaiki Grid Video agar tidak raksasa di desktop */
+.grid-videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* 2. Membatasi lebar maksimal Link Promosi agar tidak memanjang penuh */
+.grid-links {
+    display: grid;
+    gap: 15px;
+    max-width: 900px; /* Menjaga agar form tidak terlalu melar */
+}
+.link-box {
+    width: 100%;
+}
+
+/* 3. Memberikan spasi ekstra pada tabel di desktop agar lebih mudah dibaca */
+.table-saas th, .table-saas td {
+    padding: 16px 20px;
+}
+
+/* 4. Menyesuaikan area konten agar tidak terlalu melebar pada monitor ultra-wide */
+.content-wrapper {
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* 5. Custom Scrollbar untuk Desktop agar terlihat lebih profesional (ala Hacker/Sci-Fi) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
