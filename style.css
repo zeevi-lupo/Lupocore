@@ -1,0 +1,209 @@
+/* =========================================
+   LUPO CORE - STRICT SCI-FI DARK MODE
+   ========================================= */
+:root {
+    --bg-main: #05080f;      
+    --bg-panel: #0a0f18;     
+    --bg-hover: #111a27;     
+    --border: #1a2639;
+    --text-main: #e2e8f0;    
+    --text-muted: #64748b;   
+    
+    --primary: #0ea5e9;      
+    --success: #10b981;      
+    --warning: #f59e0b;      
+    --danger: #ef4444;       
+    --orange: #ff5e00;  
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { 
+    background-color: var(--bg-main); 
+    color: var(--text-main); 
+    min-height: 100vh; 
+    overflow-x: hidden; 
+}
+
+/* --- TEXT & COLORS --- */
+.text-orange { color: var(--orange); }
+.text-blue { color: var(--primary); }
+.text-green { color: var(--success); }
+.text-yellow { color: var(--warning); }
+.text-red { color: var(--danger); }
+.text-muted { color: var(--text-muted); }
+.text-center { text-align: center; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.mt-3 { margin-top: 1rem; }
+.w-100 { width: 100%; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+
+/* --- SCI-FI EFFECTS --- */
+.glow-icon { text-shadow: 0 0 15px rgba(255, 94, 0, 0.6); }
+.glow-text { text-shadow: 0 0 10px rgba(14, 165, 233, 0.5); }
+.cyber-title { font-weight: 900; letter-spacing: 2px; }
+
+.sci-fi-box {
+    background: linear-gradient(145deg, #0a0f18, #070a11);
+    border: 1px solid var(--border);
+    box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 10px rgba(255, 94, 0, 0.03);
+    border-radius: 12px;
+}
+
+/* --- VIDEO INTRO --- */
+#video-intro-wrapper {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: #000; z-index: 10000;
+    display: flex; justify-content: center; align-items: center;
+    transition: opacity 1.5s ease-in-out;
+}
+#intro-video {
+    width: 100%; height: 100%;
+    /* Mengubah ke cover memaksa video mengisi seluruh layar (vertikal di HP) */
+    object-fit: cover; 
+}
+
+/* --- LOGIN SCREEN --- */
+.login-wrapper { 
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
+    background: var(--bg-main); 
+    display: flex; justify-content: center; align-items: center; 
+    z-index: 9999; 
+}
+.login-box { 
+    padding: 40px; 
+    text-align: center; 
+    width: 90%; max-width: 400px; 
+}
+.cyber-input {
+    width: 100%; padding: 15px; border-radius: 6px; 
+    background: rgba(0,0,0,0.5); border: 1px solid var(--border);
+    color: var(--primary); font-family: monospace; letter-spacing: 2px;
+    margin-bottom: 15px; text-align: center; font-size: 16px; outline: none;
+    transition: 0.3s;
+}
+.cyber-input:focus { border-color: var(--orange); box-shadow: 0 0 10px rgba(255, 94, 0, 0.2); }
+
+.btn-cyber {
+    background: linear-gradient(90deg, var(--orange), #d94f00);
+    color: white; border: none; padding: 15px; border-radius: 6px;
+    font-weight: 700; cursor: pointer; font-size: 14px; text-transform: uppercase;
+    letter-spacing: 1px; transition: 0.3s; width: 100%;
+    box-shadow: 0 0 15px rgba(255, 94, 0, 0.3);
+}
+.btn-cyber:hover { box-shadow: 0 0 20px rgba(255, 94, 0, 0.6); transform: translateY(-2px); }
+
+/* --- MAIN LAYOUT --- */
+.app-layout { display: flex; height: 100vh; overflow: hidden; }
+.sidebar { 
+    width: 260px; background-color: var(--bg-panel); 
+    border-right: 1px solid var(--border); display: flex; flex-direction: column; 
+}
+.sidebar-brand { 
+    padding: 24px; display: flex; align-items: center; gap: 10px; 
+    font-size: 20px; border-bottom: 1px solid var(--border); 
+}
+.sidebar-menu { padding: 20px 15px; overflow-y: auto; }
+.menu-label { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; margin: 20px 0 10px 10px; }
+
+.nav-btn { 
+    width: 100%; display: flex; align-items: center; gap: 12px; 
+    background: transparent; border: none; color: var(--text-muted); 
+    padding: 12px 15px; border-radius: 8px; font-size: 14px; font-weight: 500; 
+    cursor: pointer; transition: 0.2s; text-align: left; margin-bottom: 5px; 
+}
+.nav-btn:hover { background-color: var(--bg-hover); color: var(--text-main); }
+.nav-btn.active { background-color: rgba(255, 94, 0, 0.1); color: var(--orange); border-left: 3px solid var(--orange); }
+.nav-btn.btn-danger { color: var(--danger); }
+
+.main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { height: 70px; background-color: var(--bg-panel); border-bottom: 1px solid var(--border); padding: 0 30px; }
+.user-profile { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
+.avatar { width: 35px; height: 35px; border-radius: 50%; background: var(--bg-hover); display: flex; justify-content: center; align-items: center; color: var(--primary); }
+
+.content-wrapper { padding: 30px; overflow-y: auto; height: calc(100vh - 70px); }
+.page-section { 
+    display: none; 
+    transition: none; /* Paksa agar tidak ada animasi */
+}
+
+/* --- DASHBOARD CARDS & TABLES --- */
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.stat-card { padding: 20px; display: flex; align-items: center; gap: 15px; }
+.stat-icon { width: 50px; height: 50px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 20px; }
+.bg-orange { background: rgba(255, 94, 0, 0.2); color: var(--orange); }
+.bg-blue { background: rgba(14, 165, 233, 0.2); color: var(--primary); }
+.stat-details p { font-size: 13px; color: var(--text-muted); margin-bottom: 5px; }
+.stat-details h3 { font-size: 24px; font-weight: 700; }
+
+.panel-card { padding: 20px; margin-bottom: 20px; }
+.panel-header { border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 15px; }
+.table-responsive { overflow-x: auto; }
+.table-saas { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+.table-saas th { padding: 12px 15px; color: var(--text-muted); font-weight: 600; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.table-saas td { padding: 15px; border-bottom: 1px solid var(--border); }
+.table-saas tr:hover { background: rgba(255,255,255,0.02); }
+
+.badge-status { padding: 5px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+.status-approve { background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.2); }
+
+/* --- GRID MEMBER & LINKS --- */
+.grid-member { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+.member-btn { cursor: pointer; text-align: left; padding: 15px; transition: 0.2s; color: var(--text-main); font-weight: 600; border-radius: 8px; }
+.member-btn:hover { border-color: var(--primary); }
+.grid-links { display: grid; gap: 15px; }
+.link-box { display: flex; gap: 10px; padding: 15px; align-items: center; }
+.link-box span { font-weight: 700; width: 140px; font-size: 13px; }
+.link-box input { flex: 1; margin: 0; text-align: left; }
+.link-box button { width: auto; padding: 12px 15px; }
+
+/* =========================================
+   OPTIMASI KHUSUS MOBILE (HP)
+   ========================================= */
+@media (max-width: 768px) {
+    .app-layout { flex-direction: column; }
+    
+    /* Navigasi Samping Berubah Jadi Scroll Horizontal di Atas */
+    .sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 0; }
+    .sidebar-brand { padding: 15px; justify-content: center; }
+    .sidebar-menu { 
+        display: flex; overflow-x: auto; padding: 10px 15px; gap: 10px; 
+        white-space: nowrap; -webkit-overflow-scrolling: touch; 
+    }
+    .menu-label { display: none; }
+    .nav-btn { width: auto; margin: 0; padding: 10px 15px; flex-shrink: 0; border-radius: 20px; border-left: none !important; border: 1px solid var(--border); }
+    .nav-btn.active { border-color: var(--orange); }
+
+    /* Penyesuaian Ruang Konten */
+    .topbar { padding: 0 15px; height: 60px; justify-content: center; }
+    .content-wrapper { padding: 15px; height: calc(100vh - 130px); }
+    
+    /* Penyesuaian Kotak dan Grid */
+    .summary-grid { grid-template-columns: 1fr; }
+    .stat-card { padding: 15px; }
+    .panel-card { padding: 15px; }
+    .panel-header.flex-between { flex-direction: column; align-items: flex-start; gap: 15px; }
+    
+    /* Penyesuaian Link Promosi di HP */
+    .link-box { flex-direction: column; align-items: stretch; }
+    .link-box span { width: auto; margin-bottom: 5px; }
+    .link-box button { width: 100%; margin-top: 5px; }
+}
+
+/* --- ASSETS LAYOUT & FILTER --- */
+.grid-folder { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; }
+.folder-card { background: rgba(0,0,0,0.5); border: 1px solid var(--border); padding: 20px 10px; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.2s; }
+.folder-card:hover { border-color: var(--orange); }
+.folder-card i { font-size: 30px; margin-bottom: 10px; color: var(--primary); }
+
+.time-slot { background: rgba(0,0,0,0.5); border: 1px solid var(--border); padding: 15px; border-radius: 8px; margin-bottom: 10px; }
+.time-slot.best { border-color: var(--success); }
+
+.filter-rank-wrapper { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
+.btn-rank-filter { flex: 1; background: rgba(0,0,0,0.5); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 12px; border-radius: 8px; cursor: pointer; white-space: nowrap; transition: 0.2s; font-size: 13px; font-weight: 600; }
+.btn-rank-filter.active { background: var(--orange); color: white; border-color: var(--orange); }
+
+#payout-search:focus {
+    outline: none;
+    border-color: var(--primary);
+}

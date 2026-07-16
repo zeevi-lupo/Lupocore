@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Team Lupo - System Core</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- FORM LOGIN PIN (MUNCUL SETELAH VIDEO) -->
+    <div id="login-overlay" class="login-wrapper" style="opacity: 0; display: flex;">
+        <div class="login-box sci-fi-box">
+            <i class="fa-brands fa-wolf-pack-battalion fa-3x text-orange mb-3 glow-icon"></i>
+            <h2 class="cyber-title">LUPO<span class="text-orange">CORE</span></h2>
+            <p class="text-muted mb-4">SYSTEM AUTHENTICATION REQUIRED</p>
+            <input type="password" id="login-pin" class="login-input cyber-input" placeholder="••••••••">
+            <button class="btn-cyber w-100" onclick="prosesLogin()">DECRYPT ACCESS <i class="fa-solid fa-unlock"></i></button>
+            <p id="login-error" class="text-red mt-3 cyber-error" style="display: none; font-size: 13px;">ACCESS DENIED! Invalid PIN.</p>
+        </div>
+    </div>
+
+    <!-- MAIN APP DASHBOARD -->
+    <div class="app-layout" id="main-app" style="display: none;">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-brands fa-wolf-pack-battalion text-orange glow-icon"></i>
+                <h2 class="cyber-title">LUPO<span class="text-orange">CORE</span></h2>
+            </div>
+            <nav class="sidebar-menu">
+                <p class="menu-label">SYSTEM DASHBOARD</p>
+                <button class="nav-btn active" onclick="showPage('page-postback', this)"><i class="fa-solid fa-satellite-dish"></i> Live Postback</button>
+                <button class="nav-btn" onclick="showPage('page-ranking', this)"><i class="fa-solid fa-ranking-star"></i> Leaderboard</button>
+                <button class="nav-btn" onclick="showPage('page-riwayat')"><i class="fa-solid fa-money-check-dollar"></i> Payout History</button>
+                
+                <p class="menu-label">ASSETS & TOOLS</p>
+                <button class="nav-btn" onclick="showPage('page-link', this)"><i class="fa-solid fa-link"></i> Promotion Links</button>
+                <button class="nav-btn" onclick="showPage('page-video', this)"><i class="fa-solid fa-folder-tree"></i> Video Assets</button>
+                <button class="nav-btn" onclick="showPage('page-jam', this)"><i class="fa-solid fa-stopwatch"></i> Spam Schedule</button>
+                
+                <p class="menu-label">PROTOCOLS</p>
+                <button class="nav-btn" onclick="showPage('page-tutorial', this)"><i class="fa-solid fa-microchip"></i> System Manual</button>
+                <button class="nav-btn btn-danger" onclick="showPage('page-snk', this)"><i class="fa-solid fa-shield-virus"></i> Security Rules</button>
+                <button class="nav-btn text-red" onclick="logout()" style="margin-top: 15px;"><i class="fa-solid fa-power-off"></i> Disconnect</button>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar flex-between">
+                <h2 id="topbar-text" style="text-transform: uppercase; letter-spacing: 1px;">Overview</h2>
+                <div class="topbar-actions">
+                    <div class="user-profile">
+                        <div class="avatar"><i class="fa-solid fa-user-astronaut"></i></div>
+                        <span id="user-name-display">Team Lupo</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+    <!-- HALAMAN 1: LIVE POSTBACK -->
+    <div id="page-postback" class="page-section" style="display: block;">
+        
+        <!-- Summary Card dipindah ke dalam halaman Postback -->
+        <div class="summary-grid" style="margin-bottom: 25px;">
+            <div class="stat-card sci-fi-box"><div class="stat-icon bg-orange"><i class="fa-solid fa-bolt"></i></div><div class="stat-details"><p>Total Leads</p><h3 id="sum-total">0</h3></div></div>
+            <div class="stat-card sci-fi-box"><div class="stat-icon bg-blue"><i class="fa-solid fa-dollar-sign"></i></div><div class="stat-details"><p>Estimated Revenue</p><h3 id="sum-revenue">$0.00</h3></div></div>
+        </div>
+
+        <div class="panel-card table-panel sci-fi-box">
+            <div class="panel-header flex-between">
+                <h3><i class="fa-solid fa-rss text-orange"></i> Network Data Stream <span id="auto-refresh-badge" class="badge-status status-approve" style="margin-left:10px; font-size:10px;"><i class="fa-solid fa-rotate"></i> Auto Sync</span></h3>
+                <select id="filter-subid" class="filter-input cyber-input" onchange="applyFilter()" style="width: auto; padding: 5px 10px; margin: 0;"><option value="all">All Sub-IDs</option></select>
+            </div>
+            <div class="table-responsive">
+                <table class="table-saas cyber-table">
+                    <thead><tr><th>Timestamp</th><th>Sub-ID</th><th>Offer Protocol</th><th>GEO</th><th>Payout</th><th>Status</th></tr></thead>
+                    <tbody id="tabel-postback-body"><tr><td colspan="6" class="text-center py-4 text-muted"><i class="fa-solid fa-spinner fa-spin"></i> Establishing connection...</td></tr></tbody>
+                </table>
+            </div>
+            <div class="text-center mt-3">
+                <button id="btn-load-more" class="btn-cyber w-100" onclick="loadMoreData()">LOAD MORE DATA <i class="fa-solid fa-angles-down"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN 2: LEADERBOARD & SISA SALDO -->
+    <div id="page-ranking" class="page-section">
+        <div class="panel-card border-warning sci-fi-box">
+            <div class="panel-header flex-between">
+                <h3 class="text-yellow"><i class="fa-solid fa-crown"></i> Elite Ranks</h3>
+            </div>
+            
+            <div class="filter-rank-wrapper">
+                <button class="btn-rank-filter" onclick="changeRankFilter('all', this)">Semua</button>
+                <button class="btn-rank-filter" onclick="changeRankFilter('today', this)">Hari Ini</button>
+                <button class="btn-rank-filter" onclick="changeRankFilter('weekly', this)">Minggu Ini</button>
+                <button class="btn-rank-filter active" onclick="changeRankFilter('monthly', this)">Bulan Ini</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table-saas cyber-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">Rank</th>
+                            <th>Sub-ID (Username)</th>
+                            <th>Total Leads</th>
+                            <th>Total Pendapatan</th>
+                            <th>Sisa Saldo (Cair)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabel-ranking-body"><tr><td colspan="5" class="text-center py-4 text-muted">Calculating ranks...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN 3: RIWAYAT GAJI -->
+    <div id="page-riwayat" class="page-section">
+      <div class="search-container" style="margin-bottom: 15px;">
+    <input type="text" id="payout-search" placeholder="🔍 Cari Sub-ID atau Bank..." 
+           onkeyup="filterPayouts()" 
+           style="width: 100%; padding: 10px; background: #0a0f18; border: 1px solid #1a2639; color: white; border-radius: 8px;">
+</div>
+        <div class="panel-card sci-fi-box">
+            <h3 class="mb-3 text-orange"><i class="fa-solid fa-money-check-dollar text-green"></i> Payout History</h3>
+            <div class="table-responsive">
+                <table class="table-saas cyber-table">
+                    <thead><tr><th>Tanggal Transfer</th><th>Sub-ID (Member)</th><th>Nominal (USD)</th><th>Status</th></tr></thead>
+                    <tbody id="tabel-riwayat-body"><tr><td colspan="4" class="text-center py-4 text-muted">Memuat riwayat pembayaran...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN 4: PROMOTION LINKS (SEMUA MEMBER DIKEMBALIKAN) -->
+    <div id="page-link" class="page-section">
+        <div class="panel-card sci-fi-box">
+            <div class="panel-header"><h3 id="judul-link-promosi">Select Operative (ABM)</h3></div>
+            <div id="list-member" class="grid-member">
+                <button class="member-btn cyber-input" onclick="openLink('thorfin', 'Thorfin')">🗡️ Thorfin</button>
+                <button class="member-btn cyber-input" onclick="openLink('poseidon', 'Poseidon')">🔱 Poseidon</button>
+                <button class="member-btn cyber-input" onclick="openLink('luxury33', 'Luxury33')">💎 Luxury33</button>
+                <button class="member-btn cyber-input" onclick="openLink('batako', 'Batako')">🧱 Batako</button>
+                <button class="member-btn cyber-input" onclick="openLink('kahuna', 'Kahuna Laguna')">🌊 Kahuna</button>
+                <button class="member-btn cyber-input" onclick="openLink('heisenberg', 'Heisenberg')">👨‍🔬 Heisenberg</button>
+                <button class="member-btn cyber-input" onclick="openLink('hiltopia', 'Hiltopia')">🏕️ Hiltopia</button>
+                <button class="member-btn cyber-input" onclick="openLink('ucup', 'Ucup')">👽 Ucup</button>
+                <button class="member-btn cyber-input" onclick="openLink('reymunz', 'Reymunz')">🌙 Reymunz</button>
+                <button class="member-btn cyber-input" onclick="openLink('reno', 'Reno')">🦏 Reno</button>
+                <button class="member-btn cyber-input" onclick="openLink('galon', 'Galon')">🥤 Galon</button>
+                <button class="member-btn cyber-input" onclick="openLink('jadud', 'Jadud')">👽 Jadud</button>
+                <button class="member-btn cyber-input" onclick="openLink('panci', 'Panci')">🍲 Panci</button>
+            </div>
+            <div id="detail-link" style="display:none;">
+                <button class="btn-cyber btn-outline-cyber mb-3" onclick="backToMembers()"><i class="fa-solid fa-arrow-left"></i> Return</button>
+                <h3 id="active-name" class="text-orange mb-3 glow-text"></h3>
+                <div id="render-links" class="grid-links"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN 5: VIDEO ASSETS -->
+    <div id="page-video" class="page-section">
+        <div class="panel-card sci-fi-box">
+            <div class="panel-header"><h3><i class="fa-solid fa-folder-tree text-orange"></i> Folder Video</h3></div>
+            <div id="video-folder-view" class="grid-folder">
+                <div class="folder-card" onclick="openVideo('monopoly', 'Monopoly Go')"><i class="fa-solid fa-folder-open"></i><p>Monopoly Go</p></div>
+                <div class="folder-card" onclick="openVideo('gossip', 'Gossip Harbor')"><i class="fa-solid fa-folder-open"></i><p>Gossip Harbor</p></div>
+                <div class="folder-card" onclick="openVideo('match', 'Match Master')"><i class="fa-solid fa-folder-open"></i><p>Match Master</p></div>
+                <div class="folder-card" onclick="openVideo('travel', 'Travel Town')"><i class="fa-solid fa-folder-open"></i><p>Travel Town</p></div>
+                <div class="folder-card" onclick="openVideo('dicedreams', 'Dice Dreams')"><i class="fa-solid fa-folder-open"></i><p>Dice Dreams</p></div>
+            </div>
+            <div id="video-list-view" style="display:none;">
+                <button class="btn-cyber btn-outline-cyber mb-3" onclick="closeVideo()"><i class="fa-solid fa-arrow-left"></i> Kembali ke Folder</button>
+                <h3 id="active-game-title" class="mb-3 text-blue"></h3>
+                <div id="render-videos" class="grid-videos"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN 6: SPAM SCHEDULE -->
+    <div id="page-jam" class="page-section">
+        <div class="panel-card text-center sci-fi-box">
+            <i class="fa-solid fa-stopwatch fa-3x text-yellow mb-3 glow-icon"></i>
+            <h3>Rekomendasi Jam Posting</h3>
+            <div class="time-slots mt-4">
+                <div class="time-slot best"><span class="badge-status status-approve">TERBAIK 🥇</span> <h4 class="text-green mt-2">23.00 – 02.00 WIB</h4></div>
+                <div class="time-slot"><span style="color: var(--warning); font-size: 12px; font-weight: bold;">Alternatif 1 🥈</span> <h4 class="mt-2">05.00 – 07.00 WIB</h4></div>
+                <div class="time-slot"><span style="color: var(--primary); font-size: 12px; font-weight: bold;">Alternatif 2 🥉</span> <h4 class="mt-2">20.00 – 22.00 WIB</h4></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN 7: SECURITY RULES (S&K) -->
+    <div id="page-snk" class="page-section">
+        <div class="panel-card border-danger sci-fi-box">
+            <div class="panel-header">
+                <h3 class="text-red"><i class="fa-solid fa-shield-virus"></i> Peraturan Resmi Team Lupo</h3>
+                <p class="text-muted" style="font-size: 12px; margin-top: 5px;">Harap dibaca dan dipatuhi oleh seluruh operative.</p>
+            </div>
+            <div class="p-3">
+                <div class="snk-container" style="color: var(--text-main); font-size: 14px; line-height: 1.6;">
+                    <div style="margin-bottom: 20px;">
+                        <h4 class="text-red" style="margin-bottom: 8px;"><i class="fa-solid fa-ban"></i> LARANGAN KERAS (ZERO TOLERANCE)</h4>
+                        <ul style="padding-left: 20px;">
+                            <li>Dilarang menggunakan <strong>BOT,</strong> atau skrip otomatis lainnya.</li>
+                            <li>Dilarang melakukan <strong>Self-Click</strong> (nuyul) menggunakan VPN, Proxy, atau SSH.</li>
+                            <li class="text-red"><strong>Sanksi:</strong> Pelanggaran berakibat BANNED PERMANEN dan seluruh saldo Approve akan hangus.</li>
+                        </ul>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <h4 class="text-blue" style="margin-bottom: 8px;"><i class="fa-solid fa-money-bill-transfer"></i> KETENTUAN PAYOUT & KOMISI</h4>
+                        <ul style="padding-left: 20px;">
+                            <li>Hanya data dengan status <strong>APPROVE</strong> yang akan masuk hitungan gaji.</li>
+                            <li>Perhitungan payout dilakukan secara transparan melalui sistem Leaderboard.</li>
+                            <li>Pembayaran komisi akan dilakukan setelah pihak advertiser membayar [Maksimal 14 hari setelah wd].</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- HALAMAN 8: TUTORIAL -->
+    <div id="page-tutorial" class="page-section">
+        <div class="panel-card sci-fi-box text-center">
+            <i class="fa-solid fa-microchip fa-3x text-blue mb-3 glow-icon"></i>
+            <h3>Video Panduan Sistem</h3>
+            <p class="text-muted mt-2">Segera hadir. Hubungi mentor masing-masing jika butuh bantuan cepat.</p>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
