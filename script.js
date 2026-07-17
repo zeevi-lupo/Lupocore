@@ -32,8 +32,9 @@ function prosesLogin() {
     if (pin === TEAM_PIN) {
         sessionStorage.setItem("lupo_pin", pin); 
         document.getElementById('login-overlay').style.display = 'none';
-        // INI PENTING: Perintah ini akan memunculkan isi website yang tadi kita bungkus
-        document.getElementById('main-app').style.display = 'block'; 
+        
+        // PERBAIKAN: Ubah 'block' menjadi 'flex' agar sejajar menyamping
+        document.getElementById('main-app').style.display = 'flex'; 
     } else {
         alert("PIN Salah!");
     }
