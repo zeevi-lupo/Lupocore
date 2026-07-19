@@ -245,10 +245,15 @@ function renderLeaderboard(data) {
     let arrayRanking = [];
     Object.keys(kalkulasi).forEach(kunci => {
         let memberData = kalkulasi[kunci];
-        let sisaSaldo = memberData.allTimePendapatan - memberData.total_dicairkan;
-        if (sisaSaldo < 0) sisaSaldo = 0; 
         
-        if (memberData.totalLead > 0 || sisaSaldo > 0) {
+        // PERBAIKAN: Sisa Saldo hanya dihitung jika sudah pernah mencairkan
+        let sisaSaldo = 0;
+        if (memberData.total_dicairkan > 0) {
+            sisaSaldo = memberData.allTimePendapatan - memberData.total_dicairkan;
+            if (sisaSaldo < 0) sisaSaldo = 0; 
+        }
+        
+        if (memberData.totalLead > 0 || memberData.total_dicairkan > 0) {
             arrayRanking.push({ nama: kunci, ...memberData, sisaSaldo: sisaSaldo });
         }
     });
