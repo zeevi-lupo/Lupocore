@@ -312,19 +312,19 @@ function renderRiwayatPembayaran(payments) {
 // 6. TOOLS MEDIA & LINKS
 // ==========================================
 const linksAdblueData = {
-    'thorfin': { 'travel town': "https://tinyurl.com/4s2vpykk", 'gossip harbor': "https://tinyurl.com/4wuj53bc", 'monopoly go': "https://tinyurl.com/c4jzht6v"},
-    'poseidon': { 'travel town': "https://tinyurl.com/5dsxcz58", 'gossip harbor': "https://tinyurl.com/2fev6kd6", 'monopoly go': "https://tinyurl.com/3k9yvwzv"},
-    'luxury33': { 'travel town': "https://tinyurl.com/yvp5xjbz", 'gossip harbor': "https://tinyurl.com/byekcyus"},
-    'jutonn': { 'travel town': "https://tinyurl.com/4wpwyeda", 'gossip harbor': "https://tinyurl.com/k57ssmwe", 'monopoly go': "https://tinyurl.com/5awrxybb",},
-    'kahuna': { 'travel town': "https://tinyurl.com/4p28fcem", 'gossip harbor': "https://tinyurl.com/ms9fuxcc"},
-    'heisenberg': { 'travel town': "https://tinyurl.com/4nvau4n2", 'gossip harbor': "https://tinyurl.com/3suftfma", 'monopoly go': "https://tinyurl.com/nwtwtvn2"},
-    'hiltopia': { 'travel town':"https://tinyurl.com/jxczj27u", 'gossip harbor': "https://tinyurl.com/mwchjnnn"},
-    'ucup': { 'travel town': "https://tinyurl.com/tzb6ry7b", 'gossip harbor': "https://tinyurl.com/ms957env", 'monopoly go': "https://tinyurl.com/93t9kmp6"}, 
-    'reymunz': { 'travel town': "https://tinyurl.com/2vau3m47", 'gossip harbor': "https://tinyurl.com/2rayv565", 'monopoly go': "https://tinyurl.com/kwhcn9cw"}, 
-    'reno': { 'travel town' :"https://tinyurl.com/d6j55msm", 'gossip harbor': "https://tinyurl.com/33ehn64c"}, 
-    'galon': {'travel town':"https://tinyurl.com/4yn47bty", 'gossip harbor': "https://tinyurl.com/3kmw74n4"}, 
-    'jadud': {'gossip harbor':" https://tinyurl.com/4bfb77ub", 'travel town': "https://tinyurl.com/bdz7ftj4", 'monopoly go': "https://tinyurl.com/493djspp"}, 
-    'panci': {'gossip harbor':"https://tinyurl.com/54k9nats", 'travel town': "https://tinyurl.com/3dy934a2"}
+    'thorfin': { 'travel town': "https://tinyurl.com/mrx5rvbs", 'gossip harbor': "https://tinyurl.com/3y5z3v29", 'monopoly go': "https://tinyurl.com/mn6mmepm"},
+    'poseidon': { 'travel town': "https://tinyurl.com/3yfcd8ha", 'gossip harbor': "https://tinyurl.com/4nub874x", 'monopoly go': "https://tinyurl.com/yezh5d6f"},
+    'luxury33': { 'travel town': "", 'gossip harbor': ""},
+    'jutonn': { 'travel town': "https://tinyurl.com/2zza7rs5", 'gossip harbor': "https://tinyurl.com/5t3rxsxn", 'monopoly go': "https://tinyurl.com/ynhwdasb",},
+    'kahuna': { 'travel town': "", 'gossip harbor': ""},
+    'heisenberg': { 'travel town': "https://tinyurl.com/ywvw8fwh", 'gossip harbor': "https://tinyurl.com/bdfsna5s", 'monopoly go': "https://tinyurl.com/mwj9ennm"},
+    'hiltopia': { 'travel town':"https://tinyurl.com/ytut95c8", 'gossip harbor': "https://tinyurl.com/djne77hj"},
+    'ucup': { 'travel town': "https://tinyurl.com/ym8n4ckj", 'gossip harbor': "https://tinyurl.com/3tnnpenv", 'monopoly go': "https://tinyurl.com/39fwfwrv"}, 
+    'reymunz': { 'travel town': "https://tinyurl.com/me3c83az", 'gossip harbor': "https://tinyurl.com/4kkaj9nb", 'monopoly go': "https://tinyurl.com/3dkum72k"}, 
+    'reno': { 'travel town' :"https://tinyurl.com/476nasyy", 'gossip harbor': "https://tinyurl.com/muaaas7n"}, 
+    'galon': {'travel town':"https://tinyurl.com/y3kb3y4s", 'gossip harbor': "https://tinyurl.com/4ue4v3cj"}, 
+    'jadud': {'gossip harbor':" https://tinyurl.com/2nz3j4yj", 'travel town': "https://tinyurl.com/4mdyzz47", 'monopoly go': "https://tinyurl.com/5n8e34pa"}, 
+    'panci': {'gossip harbor':"https://tinyurl.com/yc74x2w3", 'travel town': "https://tinyurl.com/53fjx996"}
 };
 
 function openLink(id, nama) {
