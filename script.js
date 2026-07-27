@@ -3,7 +3,7 @@ const URL_API_POSTBACK = "https://script.google.com/macros/s/AKfycbzpL02g8NaiqMa
 
 let globalAdblueData = [];
 let globalPembayaranAdblueData = []; 
-let currentDataLimit = 30; 
+let currentDataLimit = 5000; 
 let autoRefreshInterval = null;
 
 // ==========================================
