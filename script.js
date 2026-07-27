@@ -318,7 +318,7 @@ const linksAdblueData = {
     'jutonn': { 'travel town': "https://tinyurl.com/2zza7rs5", 'gossip harbor': "https://tinyurl.com/5t3rxsxn", 'monopoly go': "https://tinyurl.com/ynhwdasb",},
     'kahuna': { 'travel town': "", 'gossip harbor': ""},
     'heisenberg': { 'travel town': "https://tinyurl.com/ywvw8fwh", 'gossip harbor': "https://tinyurl.com/bdfsna5s", 'monopoly go': "https://tinyurl.com/mwj9ennm"},
-    'hiltopia': { 'travel town':"https://tinyurl.com/ytut95c8", 'gossip harbor': "https://tinyurl.com/djne77hj"},
+    'powerf': { 'travel town':"https://tinyurl.com/y39ztxcs", 'gossip harbor': "https://tinyurl.com/yptw8wv5"},
     'ucup': { 'travel town': "https://tinyurl.com/ym8n4ckj", 'gossip harbor': "https://tinyurl.com/3tnnpenv", 'monopoly go': "https://tinyurl.com/39fwfwrv"}, 
     'reymunz': { 'travel town': "https://tinyurl.com/me3c83az", 'gossip harbor': "https://tinyurl.com/4kkaj9nb", 'monopoly go': "https://tinyurl.com/3dkum72k"}, 
     'reno': { 'travel town' :"https://tinyurl.com/476nasyy", 'gossip harbor': "https://tinyurl.com/muaaas7n"}, 
