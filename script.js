@@ -197,90 +197,71 @@ function parseDateString(dateStr) {
 
 function renderLeaderboard(data) {
     let kalkulasi = {};
-    const skrg = new Date();
-    const hariIni = new Date(skrg.getFullYear(), skrg.getMonth(), skrg.getDate());
 
+    // 1. Hitung total pendapatan (All-time)
     data.forEach(row => {
-        const subIdRaw = row.sub_1 || row.sub_id || '-';
-        if(subIdRaw !== '-') {
-            let nama = subIdRaw.toUpperCase();
-            let dolar = parseFloat(row.payout) || 0;
-            
-            if (!kalkulasi[nama]) {
-                kalkulasi[nama] = { totalLead: 0, pendapatan: 0, allTimePendapatan: 0, total_dicairkan: 0 };
-            }
-            
-            // All time pendapatan untuk hitungan Sisa Saldo mutlak
-            kalkulasi[nama].allTimePendapatan += dolar;
-
-            // Filter Waktu Khusus untuk Peringkat
-            const tglData = parseDateString(row.waktu);
-            let lolosFilter = (currentRankFilter === 'all') || 
-                (currentRankFilter === 'today' && tglData.getTime() === hariIni.getTime()) ||
-                (currentRankFilter === 'weekly' && (hariIni - tglData) / (1000 * 60 * 60 * 24) <= 7) ||
-                (currentRankFilter === 'monthly' && tglData.getMonth() === skrg.getMonth() && tglData.getFullYear() === skrg.getFullYear());
-
-            if (lolosFilter) {
-                kalkulasi[nama].totalLead += 1;
-                kalkulasi[nama].pendapatan += dolar; 
-            }
+        let subId = (row.sub_1 || row.sub_id || '-').toUpperCase();
+        let payout = parseFloat(row.payout) || 0;
+        
+        if (!kalkulasi[subId]) {
+            kalkulasi[subId] = { totalLeads: 0, totalPendapatan: 0 };
         }
+        kalkulasi[subId].totalLeads += 1;
+        kalkulasi[subId].totalPendapatan += payout;
     });
 
-    if (globalPembayaranAdblueData && globalPembayaranAdblueData.length > 0) {
-        globalPembayaranAdblueData.forEach(payRow => {
-            const statusPay = String(payRow.status || '').toLowerCase();
-            if (statusPay.includes('berhasil')) {
-                 const subIdPayRaw = payRow.sub_id || payRow.sub_1 || '-';
-                 if (subIdPayRaw !== '-') {
-                     const subIdPay = subIdPayRaw.toUpperCase();
-                     const nominalPay = parseFloat(payRow.nominal_usd || payRow.nominal || payRow.payout) || 0;
-                     if (!kalkulasi[subIdPay]) kalkulasi[subIdPay] = { totalLead: 0, pendapatan: 0, allTimePendapatan: 0, total_dicairkan: 0 };
-                     kalkulasi[subIdPay].total_dicairkan += nominalPay;
-                 }
+    // 2. Hitung jumlah yang sudah di-WD (ditarik)
+    let kalkulasiWD = {};
+    if (typeof globalPembayaranAdblueData !== 'undefined') {
+        globalPembayaranAdblueData.forEach(row => {
+            let subId = (row.sub_1 || row.sub_id || '-').toUpperCase();
+            // Mengambil angka payout yang telah dibayarkan
+            let wdAmount = parseFloat(row.payout || row.jumlah_wd || 0); 
+            
+            if (!kalkulasiWD[subId]) {
+                kalkulasiWD[subId] = 0;
             }
+            kalkulasiWD[subId] += wdAmount;
         });
     }
 
-    let arrayRanking = [];
-    Object.keys(kalkulasi).forEach(kunci => {
-        let memberData = kalkulasi[kunci];
+    const tbody = document.getElementById('tabel-ranking-body'); // Pastikan ID tabel sesuai
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    // 3. Kalkulasi sisa saldo agar akurat
+    let leaderboardArray = Object.keys(kalkulasi).map(subId => {
+        let pendapatan = kalkulasi[subId].totalPendapatan;
+        let sudahDibayar = kalkulasiWD[subId] || 0;
         
-        // PERBAIKAN: Sisa Saldo hanya dihitung jika sudah pernah mencairkan
-        let sisaSaldo = 0;
-        if (memberData.total_dicairkan > 0) {
-            sisaSaldo = memberData.allTimePendapatan - memberData.total_dicairkan;
-            if (sisaSaldo < 0) sisaSaldo = 0; 
-        }
+        // Mencegah error desimal JavaScript
+        let sisaSaldo = (pendapatan - sudahDibayar).toFixed(2);
+        sisaSaldo = parseFloat(sisaSaldo);
         
-        if (memberData.totalLead > 0 || memberData.total_dicairkan > 0) {
-            arrayRanking.push({ nama: kunci, ...memberData, sisaSaldo: sisaSaldo });
+        // Memastikan jika sisa saldo di bawah 0.01 (misal 0.000001), langsung dibulatkan ke 0
+        if (sisaSaldo < 0.01) {
+            sisaSaldo = 0.00;
         }
+
+        return { subId, leads: kalkulasi[subId].totalLeads, pendapatan, sisaSaldo };
     });
 
-    arrayRanking.sort((a, b) => b.pendapatan - a.pendapatan);
-    
-    const tbody = document.getElementById('tabel-ranking-body');
-    if(!tbody) return;
-    tbody.innerHTML = arrayRanking.length === 0 ? '<tr><td colspan="5" class="text-center text-muted py-4">Data belum tersedia untuk periode ini.</td></tr>' : '';
+    // Urutkan berdasarkan pendapatan terbesar
+    leaderboardArray.sort((a, b) => b.pendapatan - a.pendapatan);
 
-    arrayRanking.forEach((member, index) => {
-        let piala = index + 1;
-        if(index === 0) piala = '<i class="fa-solid fa-trophy text-yellow"></i>';
-        else if(index === 1) piala = '<i class="fa-solid fa-medal text-muted"></i>';
-        else if(index === 2) piala = '<i class="fa-solid fa-medal" style="color: #cd7f32;"></i>';
-        
+    // Render ke dalam tabel
+    leaderboardArray.forEach((item, index) => {
         tbody.innerHTML += `
             <tr>
-                <td class="text-center" style="font-weight:700;">${piala}</td>
-                <td class="text-blue" style="font-weight:700;">${member.nama}</td>
-                <td style="font-weight:600;">${member.totalLead} Leads</td>
-                <td class="text-green" style="font-weight:700;">$ ${member.pendapatan.toFixed(2)}</td>
-                <td style="color: #f59e0b; font-weight:800; background: rgba(245, 158, 11, 0.1); text-align: center; border-radius:4px;">$ ${member.sisaSaldo.toFixed(2)}</td>
-            </tr>`;
+                <td>${index + 1}</td>
+                <td style="font-weight: 700;" class="text-blue">${item.subId}</td>
+                <td>${item.leads}</td>
+                <td class="text-green" style="font-weight: 700;">$${item.pendapatan.toFixed(2)}</td>
+                <td class="text-orange" style="font-weight: 700;">$${item.sisaSaldo.toFixed(2)}</td>
+            </tr>
+        `;
     });
 }
-
 function renderRiwayatPembayaran(payments) {
     const tbody = document.getElementById('tabel-riwayat-body');
     if(!tbody) return; 
