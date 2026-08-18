@@ -198,7 +198,7 @@ function parseDateString(dateStr) {
 function renderLeaderboard(data) {
     let kalkulasi = {};
 
-    // 1. Hitung total pendapatan (All-time)
+    // 1. Hitung total pendapatan (All-time) dari Postback AdblueMedia
     data.forEach(row => {
         let subId = (row.sub_1 || row.sub_id || '-').toUpperCase();
         let payout = parseFloat(row.payout) || 0;
@@ -210,26 +210,32 @@ function renderLeaderboard(data) {
         kalkulasi[subId].totalPendapatan += payout;
     });
 
-    // 2. Hitung jumlah yang sudah di-WD (ditarik)
+    // 2. Hitung jumlah yang sudah di-WD HANYA JIKA STATUS "BERHASIL"
     let kalkulasiWD = {};
     if (typeof globalPembayaranAdblueData !== 'undefined') {
         globalPembayaranAdblueData.forEach(row => {
-            let subId = (row.sub_1 || row.sub_id || '-').toUpperCase();
-            // Mengambil angka payout yang telah dibayarkan
-            let wdAmount = parseFloat(row.payout || row.jumlah_wd || 0); 
+            let subId = (row.sub_id || row.sub_1 || '-').toUpperCase();
             
-            if (!kalkulasiWD[subId]) {
-                kalkulasiWD[subId] = 0;
+            // Cek apakah kolom status mengandung kata "berhasil"
+            let statusWD = String(row.status || '').toLowerCase();
+            
+            if (statusWD.includes('berhasil')) {
+                // Menarik data nominal sesuai dengan header di Google Sheet (Nominal / Nominal USD)
+                let wdAmount = parseFloat(row.nominal_usd || row.nominal || row.payout) || 0; 
+                
+                if (!kalkulasiWD[subId]) {
+                    kalkulasiWD[subId] = 0;
+                }
+                kalkulasiWD[subId] += wdAmount;
             }
-            kalkulasiWD[subId] += wdAmount;
         });
     }
 
-    const tbody = document.getElementById('tabel-ranking-body'); // Pastikan ID tabel sesuai
+    const tbody = document.getElementById('tabel-ranking-body'); 
     if (!tbody) return;
     tbody.innerHTML = '';
 
-    // 3. Kalkulasi sisa saldo agar akurat
+    // 3. Kalkulasi sisa saldo (Pendapatan - Jumlah WD Sukses)
     let leaderboardArray = Object.keys(kalkulasi).map(subId => {
         let pendapatan = kalkulasi[subId].totalPendapatan;
         let sudahDibayar = kalkulasiWD[subId] || 0;
@@ -238,7 +244,7 @@ function renderLeaderboard(data) {
         let sisaSaldo = (pendapatan - sudahDibayar).toFixed(2);
         sisaSaldo = parseFloat(sisaSaldo);
         
-        // Memastikan jika sisa saldo di bawah 0.01 (misal 0.000001), langsung dibulatkan ke 0
+        // Memastikan jika sisa saldo di bawah 0.01 (misal hasil kurangnya sangat kecil), dibulatkan ke 0
         if (sisaSaldo < 0.01) {
             sisaSaldo = 0.00;
         }
@@ -249,7 +255,7 @@ function renderLeaderboard(data) {
     // Urutkan berdasarkan pendapatan terbesar
     leaderboardArray.sort((a, b) => b.pendapatan - a.pendapatan);
 
-    // Render ke dalam tabel
+    // 4. Render ke dalam tabel HTML
     leaderboardArray.forEach((item, index) => {
         tbody.innerHTML += `
             <tr>
