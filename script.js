@@ -135,6 +135,9 @@ function applyFilter() {
         return filterSubId === 'all' || valSubId === filterSubId;
     });
 
+    // Reset limit ke 50 setiap kali filter diganti
+    renderLimit = 50; 
+
     renderTable(filteredData);
     renderSummary(filteredData); 
     renderLeaderboard(globalAdblueData);
@@ -143,18 +146,42 @@ function applyFilter() {
 // ==========================================
 // 4. RENDER TABEL & TAMPILAN
 // ==========================================
+// Tambahkan variabel ini di bagian atas file script.js Anda (di bawah variabel global lainnya)
+let renderLimit = 50; // Hanya tampilkan 50 baris pertama di tabel
+
+// ==========================================
+// FUNGSI LOAD MORE DATA (DIUBAH)
+// ==========================================
+function loadMoreData() {
+    renderLimit += 50; // Tambah 50 baris lagi setiap tombol diklik
+    applyFilter();     // Render ulang tabel dengan limit baru
+}
+
+// ==========================================
+// FUNGSI RENDER TABLE (DIPERBAIKI UNTUK ANTI-LAG)
+// ==========================================
 function renderTable(data) {
     const tbody = document.getElementById('tabel-postback-body');
     if(!tbody) return;
+    
+    // Kosongkan tabel sebelum merender ulang
     tbody.innerHTML = ''; 
+    
     if(data.length === 0) {
         tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">No data available.</td></tr>';
         return;
     }
-    data.forEach(row => {
-        const valSubId = row.sub_1 || '-';
+
+    // MEMOTONG DATA: Hanya ambil sejumlah 'renderLimit' (misal: 50 data teratas)
+    const dataToRender = data.slice(0, renderLimit);
+    
+    // MENGGABUNGKAN HTML SEKALIGUS (Ini rahasia yang bikin web jadi super ringan)
+    let htmlContent = "";
+    
+    dataToRender.forEach(row => {
+        const valSubId = row.sub_1 || row.sub_id || '-';
         const valPayout = row.payout || '0';
-        tbody.innerHTML += `
+        htmlContent += `
             <tr>
                 <td class="text-muted" style="font-family: monospace; font-size:12px;">${row.waktu || '-'}</td>
                 <td style="font-weight: 700;" class="text-blue">${valSubId.toUpperCase()}</td>
@@ -164,6 +191,20 @@ function renderTable(data) {
                 <td><span class="badge-status status-approve"><i class="fa-solid fa-check"></i> VERIFIED</span></td>
             </tr>`;
     });
+    
+    // Masukkan ke dalam HTML sekaligus (Browser tidak akan ngelag)
+    tbody.innerHTML = htmlContent;
+
+    // Atur tombol "LOAD MORE DATA"
+    const btnLoad = document.getElementById('btn-load-more');
+    if (btnLoad) {
+        // Jika data yang dirender sudah sama atau lebih dari total data asli, sembunyikan tombol
+        if (renderLimit >= data.length) {
+            btnLoad.style.display = 'none';
+        } else {
+            btnLoad.style.display = 'block';
+        }
+    }
 }
 
 function renderSummary(data) {
