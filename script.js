@@ -1,4 +1,4 @@
-const TEAM_PIN = "1234"; 
+const TEAM_PIN = "234"; 
 const URL_API_POSTBACK = "https://script.google.com/macros/s/AKfycbzpL02g8NaiqMasjH3hIOoWENqPGrn-hcmTGDGQ_RWEsF7WVPolCzutV4dreErxdwEXmQ/exec"; 
 
 let globalAdblueData = [];
