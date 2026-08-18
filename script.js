@@ -201,7 +201,10 @@ function renderLeaderboard(data) {
     // 1. Hitung total pendapatan (All-time) dari Postback AdblueMedia
     data.forEach(row => {
         let subId = (row.sub_1 || row.sub_id || '-').toUpperCase();
-        let payout = parseFloat(row.payout) || 0;
+        
+        // PERBAIKAN: Ubah koma jadi titik untuk angka pendapatan
+        let rawPayout = String(row.payout || '0').replace(',', '.');
+        let payout = parseFloat(rawPayout) || 0;
         
         if (!kalkulasi[subId]) {
             kalkulasi[subId] = { totalLeads: 0, totalPendapatan: 0 };
@@ -215,13 +218,12 @@ function renderLeaderboard(data) {
     if (typeof globalPembayaranAdblueData !== 'undefined') {
         globalPembayaranAdblueData.forEach(row => {
             let subId = (row.sub_id || row.sub_1 || '-').toUpperCase();
-            
-            // Cek apakah kolom status mengandung kata "berhasil"
             let statusWD = String(row.status || '').toLowerCase();
             
             if (statusWD.includes('berhasil')) {
-                // Menarik data nominal sesuai dengan header di Google Sheet (Nominal / Nominal USD)
-                let wdAmount = parseFloat(row.nominal_usd || row.nominal || row.payout) || 0; 
+                // PERBAIKAN PENTING: Ubah koma jadi titik agar 2,84 dibaca 2.84
+                let rawWD = String(row.nominal_usd || row.nominal || row.payout || '0').replace(',', '.');
+                let wdAmount = parseFloat(rawWD) || 0; 
                 
                 if (!kalkulasiWD[subId]) {
                     kalkulasiWD[subId] = 0;
@@ -244,7 +246,7 @@ function renderLeaderboard(data) {
         let sisaSaldo = (pendapatan - sudahDibayar).toFixed(2);
         sisaSaldo = parseFloat(sisaSaldo);
         
-        // Memastikan jika sisa saldo di bawah 0.01 (misal hasil kurangnya sangat kecil), dibulatkan ke 0
+        // Jika sisa saldo nyaris 0 atau minus, bulatkan ke 0
         if (sisaSaldo < 0.01) {
             sisaSaldo = 0.00;
         }
