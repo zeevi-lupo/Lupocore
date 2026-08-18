@@ -5,6 +5,7 @@ let globalAdblueData = [];
 let globalPembayaranAdblueData = []; 
 let currentDataLimit = 5000; 
 let autoRefreshInterval = null;
+let renderLimit = 50; // Variabel anti-lag dipindahkan ke sini agar terbaca sistem
 
 // ==========================================
 // 1. LOGIKA LOGIN (INSTANT FETCH)
@@ -98,23 +99,8 @@ function fetchPostbackData() {
             populateSubIdFilter(); 
             applyFilter(); 
             renderRiwayatPembayaran(globalPembayaranAdblueData);
-            
-            const totalServerData = data.total_semua_data || 0;
-            const btnLoad = document.getElementById('btn-load-more');
-            if(btnLoad) {
-                if (globalAdblueData.length >= totalServerData) {
-                    btnLoad.style.display = 'none'; 
-                } else {
-                    btnLoad.style.display = 'block';
-                }
-            }
         })
         .catch(console.error);
-}
-
-function loadMoreData() {
-    currentDataLimit += 30; 
-    fetchPostbackData();
 }
 
 function populateSubIdFilter() {
@@ -146,20 +132,14 @@ function applyFilter() {
 // ==========================================
 // 4. RENDER TABEL & TAMPILAN
 // ==========================================
-// Tambahkan variabel ini di bagian atas file script.js Anda (di bawah variabel global lainnya)
-let renderLimit = 50; // Hanya tampilkan 50 baris pertama di tabel
 
-// ==========================================
-// FUNGSI LOAD MORE DATA (DIUBAH)
-// ==========================================
+// FUNGSI LOAD MORE DATA (DIUBAH UNTUK ANTI-LAG)
 function loadMoreData() {
     renderLimit += 50; // Tambah 50 baris lagi setiap tombol diklik
     applyFilter();     // Render ulang tabel dengan limit baru
 }
 
-// ==========================================
 // FUNGSI RENDER TABLE (DIPERBAIKI UNTUK ANTI-LAG)
-// ==========================================
 function renderTable(data) {
     const tbody = document.getElementById('tabel-postback-body');
     if(!tbody) return;
@@ -219,7 +199,7 @@ function renderSummary(data) {
 }
 
 // ==========================================
-// 5. LEADERBOARD (DENGAN SISA SALDO & FILTER WAKTU)
+// 5. LEADERBOARD (DENGAN SISA SALDO)
 // ==========================================
 let currentRankFilter = 'monthly';
 function changeRankFilter(filterType, btnElement) {
@@ -311,6 +291,7 @@ function renderLeaderboard(data) {
         `;
     });
 }
+
 function renderRiwayatPembayaran(payments) {
     const tbody = document.getElementById('tabel-riwayat-body');
     if(!tbody) return; 
@@ -453,7 +434,6 @@ function filterPayouts() {
     const input = document.getElementById('payout-search');
     const filter = input.value.toLowerCase();
     
-    // PERBAIKAN 3: Sesuaikan target ID dengan tabel riwayat di file HTML
     const tableBody = document.getElementById('tabel-riwayat-body');
     if(!tableBody) return;
     
