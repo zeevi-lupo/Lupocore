@@ -336,7 +336,8 @@ const linksAdblueData = {
     'galon': {'travel town':"https://tinyurl.com/y3kb3y4s", 'gossip harbor': "https://tinyurl.com/4ue4v3cj"}, 
     'jadud': {'gossip harbor':" https://tinyurl.com/2nz3j4yj", 'travel town': "https://tinyurl.com/4mdyzz47", 'monopoly go': "https://tinyurl.com/5n8e34pa"}, 
     'panci': {'gossip harbor':"https://tinyurl.com/yc74x2w3", 'travel town': "https://tinyurl.com/53fjx996"}, 
-    'joni': {'travel town': "https://tinyurl.com/552c8n3v"}
+    'joni': {'travel town': "https://tinyurl.com/552c8n3v"},
+    'megalodon': {'gossip harbor': "https://tinyurl.com/yu8umu69"}
 };
 
 function openLink(id, nama) {
