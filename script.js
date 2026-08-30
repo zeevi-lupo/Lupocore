@@ -337,7 +337,8 @@ const linksAdblueData = {
     'jadud': {'gossip harbor':" https://tinyurl.com/2nz3j4yj", 'travel town': "https://tinyurl.com/4mdyzz47", 'monopoly go': "https://tinyurl.com/5n8e34pa", 'coin master':"https://tinyurl.com/4th7mab8"}, 
     'panci': {'gossip harbor':"https://tinyurl.com/yc74x2w3", 'travel town': "https://tinyurl.com/53fjx996", 'coin master':"https://tinyurl.com/3mtbk6sx"}, 
     'joni': {'gossip harbor':"https://tinyurl.com/3ps26pjt", 'travel town': "https://tinyurl.com/552c8n3v", 'coin master':"https://tinyurl.com/3mxn6e8h"},
-    'megalodon': {'gossip harbor': "https://tinyurl.com/yu8umu69", 'coin master':"https://tinyurl.com/3npn94jv"}
+    'megalodon': {'gossip harbor': "https://tinyurl.com/yu8umu69", 'coin master':"https://tinyurl.com/3npn94jv"}, 
+    'msbrew':{'gossip harbor': "https://tinyurl.com/sus65855", 'travel town':"https://tinyurl.com/2w88784h", 'monopoly go':"https://tinyurl.com/4kbexhhd"}
 };
 
 function openLink(id, nama) {
