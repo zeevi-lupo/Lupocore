@@ -330,7 +330,7 @@ const linksAdblueData = {
     'kahuna': { 'travel town': "", 'gossip harbor': ""},
     'heisenberg': { 'travel town': "https://tinyurl.com/ywvw8fwh", 'gossip harbor': "https://tinyurl.com/bdfsna5s", 'monopoly go': "https://tinyurl.com/mwj9ennm", 'coin master':"https://tinyurl.com/5andbpz6"},
     'powerf': { 'travel town':"https://tinyurl.com/y39ztxcs", 'gossip harbor': "https://tinyurl.com/yptw8wv5"},
-    'ucup': { 'travel town': "https://tinyurl.com/ym8n4ckj", 'gossip harbor': "https://tinyurl.com/3tnnpenv", 'monopoly go': "https://tinyurl.com/39fwfwrv", 'coin master':"https://tinyurl.com/4wcauys9"}, 
+    'Pocarisweat': { 'travel town': "https://tinyurl.com/2zu9cnvx", 'gossip harbor': "https://tinyurl.com/23zka3vs", 'monopoly go': "https://tinyurl.com/4t5bs3j4", 'coin master':"https://tinyurl.com/adxpzxrv"}, 
     'reymunz': { 'travel town': "https://tinyurl.com/me3c83az", 'gossip harbor': "https://tinyurl.com/4kkaj9nb", 'monopoly go': "https://tinyurl.com/3dkum72k", 'coin master':"https://tinyurl.com/3yvkh4a9"}, 
     'reno': { 'travel town' :"https://tinyurl.com/476nasyy", 'gossip harbor': "https://tinyurl.com/muaaas7n", 'coin master':"https://tinyurl.com/4kxbutcw"}, 
     'galon': {'travel town':"https://tinyurl.com/y3kb3y4s", 'gossip harbor': "https://tinyurl.com/4ue4v3cj", 'coin master':"https://tinyurl.com/43w29j5t"}, 
