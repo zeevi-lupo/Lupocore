@@ -324,7 +324,7 @@ function renderRiwayatPembayaran(payments) {
 // ==========================================
 const linksAdblueData = {
     'thorfin': { 'travel town': "https://tinyurl.com/mrx5rvbs", 'gossip harbor': "https://tinyurl.com/3y5z3v29", 'monopoly go': "https://tinyurl.com/mn6mmepm", 'coin master':"https://tinyurl.com/y5xk2my2"},
-    'poseidon': { 'travel town': "https://tinyurl.com/3yfcd8ha", 'gossip harbor': "https://tinyurl.com/4nub874x", 'monopoly go': "https://tinyurl.com/yezh5d6f", 'coin master':"https://tinyurl.com/2p39aen5"},
+    'jefferson': { 'travel town': "https://tinyurl.com/4yjsvvx5", 'gossip harbor': "https://tinyurl.com/y9cjmsf8", 'monopoly go': "https://tinyurl.com/4aatvxs2", 'coin master':"https://tinyurl.com/3nn2xzh6"},
     'luxury33': { 'travel town': "", 'gossip harbor': ""},
     'jutonn': { 'travel town': "https://tinyurl.com/2zza7rs5", 'gossip harbor': "https://tinyurl.com/5t3rxsxn", 'monopoly go': "https://tinyurl.com/ynhwdasb", 'coin master':"https://tinyurl.com/bdd8uwy7"},
     'kahuna': { 'travel town': "", 'gossip harbor': ""},
