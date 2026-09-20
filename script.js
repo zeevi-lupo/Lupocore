@@ -324,11 +324,11 @@ function renderRiwayatPembayaran(payments) {
 // ==========================================
 const linksAdblueData = {
     'thorfin': { 'travel town': "https://tinyurl.com/mrx5rvbs", 'gossip harbor': "https://tinyurl.com/3y5z3v29", 'monopoly go': "https://tinyurl.com/mn6mmepm", 'coin master':"https://tinyurl.com/y5xk2my2"},
-    'jefferson': { 'travel town': "https://tinyurl.com/4yjsvvx5", 'gossip harbor': "https://tinyurl.com/y9cjmsf8", 'monopoly go': "https://tinyurl.com/4aatvxs2", 'coin master':"https://tinyurl.com/3nn2xzh6"},
-    'luxury33': { 'travel town': "https://tinyurl.com/53hvssas", 'gossip harbor': "https://tinyurl.com/mtnuyu7y"},
-    'jutonn': { 'travel town': "https://tinyurl.com/2zza7rs5", 'gossip harbor': "https://tinyurl.com/5t3rxsxn", 'monopoly go': "https://tinyurl.com/ynhwdasb", 'coin master':"https://tinyurl.com/bdd8uwy7"},
+    'jefferson': { 'travel town': "https://tinyurl.com/4yjsvvx5", 'gossip harbor': "https://tinyurl.com/y9cjmsf8", 'monopoly go': "https://tinyurl.com/4aatvxs2", 'coin master':"https://tinyurl.com/3nn2xzh6"', 'ludora':"https://tinyurl.com/4d9m2k5y"},
+    'luxury33': { 'travel town': "https://tinyurl.com/53hvssas", 'gossip harbor': "https://tinyurl.com/mtnuyu7y", 'ludora':"https://tinyurl.com/442hj8zp"},
+    'jutoon': { 'travel town': "https://tinyurl.com/2zza7rs5", 'gossip harbor': "https://tinyurl.com/5t3rxsxn", 'monopoly go': "https://tinyurl.com/ynhwdasb", 'coin master':"https://tinyurl.com/bdd8uwy7", 'ludora':"https://tinyurl.com/5n7n77y4"},
     'kahuna': { 'travel town': "", 'gossip harbor': ""},
-    'jinx': { 'travel town': "https://tinyurl.com/4ndrbb85", 'gossip harbor': "https://tinyurl.com/u3uhsm7a", 'monopoly go': "https://tinyurl.com/2s5wr34p", 'coin master':"https://tinyurl.com/mry9jcsx"},
+    'jinx': { 'travel town': "https://tinyurl.com/4ndrbb85", 'gossip harbor': "https://tinyurl.com/u3uhsm7a", 'monopoly go': "https://tinyurl.com/2s5wr34p", 'coin master':"https://tinyurl.com/mry9jcsx", 'ludor':"https://tinyurl.com/3kcdkw4s"},
     'powerf': { 'travel town':"https://tinyurl.com/y39ztxcs", 'gossip harbor': "https://tinyurl.com/yptw8wv5"},
     'pocarisweat': { 'travel town': "https://tinyurl.com/2zu9cnvx", 'gossip harbor': "https://tinyurl.com/23zka3vs", 'monopoly go': "https://tinyurl.com/4t5bs3j4", 'coin master':"https://tinyurl.com/adxpzxrv"}, 
     'reymunz': { 'travel town': "https://tinyurl.com/me3c83az", 'gossip harbor': "https://tinyurl.com/4kkaj9nb", 'monopoly go': "https://tinyurl.com/3dkum72k", 'coin master':"https://tinyurl.com/3yvkh4a9"}, 
